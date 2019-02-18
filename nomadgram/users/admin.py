@@ -15,3 +15,14 @@ class UserAdmin(auth_admin.UserAdmin):
     fieldsets = (("User", {"fields": ("name",)}),) + auth_admin.UserAdmin.fieldsets
     list_display = ["username", "name", "is_superuser"]
     search_fields = ["name"]
+
+
+# @admin.register(User)
+# class MyUserAdmin(AuthUserAdmin):
+#     form = MyUserChangeForm
+#     add_user = MyUserCreationForm
+#     fieldsets = (
+#         ('User Profile',{'fields':('name','followers','following')}),
+#     ) + AuthUserAdmin.fieldsets
+#     list_display = ('username','name','is_superuser')
+#     search_field = ['name']

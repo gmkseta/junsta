@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/gmkseta/.local/share/virtualenvs/nomadgram-zSryZsOn/bin/python"
+    "python.pythonPath": "/Users/gmkseta/.local/share/virtualenvs/nomadgram-zSryZsOn/bin/python",
+    "python.linting.pylintEnabled": true
 }
