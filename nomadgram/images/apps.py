@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class ImagesConfig(AppConfig):
-    name = 'images'
+    name = 'nomadgram.images'
+    verbose_name = "Images"
