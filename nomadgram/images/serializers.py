@@ -25,6 +25,7 @@ class ImageSerializer(serializers.ModelSerializer):
         model = models.Image
         fields = (
             'id',
+            'creator',
             'file',
             'location',
             'caption',
