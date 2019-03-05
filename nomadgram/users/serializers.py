@@ -9,5 +9,20 @@ class ExploreUserSerializer(serializers.ModelSerializer):
         fields = (
             'profile_image',
             'username',
-            'name'
+            'name',
+            'id'
+        )
+
+class UserProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model =models.User
+        fields = (
+            'username',
+            'name',
+            'bio',
+            'website',
+            'post_count',
+            'followers_count',
+            'following_count'
         )
