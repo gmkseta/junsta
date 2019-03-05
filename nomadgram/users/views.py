@@ -3,14 +3,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
 
-class ExploresUsers(APIView):
+class ExploreUsers(APIView):
 
     def get(self, request, format=None):
 
         last_five = models.User.objects.all().order_by('-date_joined')[:5]
 
 
-        serializer = serializers.ExploreUserSerializer(last_five, many=True)
+        serializer = serializers.ListUserSerializer(last_five, many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -58,5 +58,34 @@ class UserProfile(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         serializer = serializers.UserProfileSerializer(found_user)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+class UserFollowers(APIView):
+
+    def get(self, request, username, format=True):
+        try:
+            found_user = models.User.objects.get(username=username)
+        except models.User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        user_followers = found_user.followers.all()
+
+        serializer = serializers.ListUserSerializer(user_followers, many=True)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class UserFollowing(APIView):
+
+    def get(self, request, username, format=True):
+        try:
+            found_user = models.User.objects.get(username=username)
+        except models.User.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        user_following = found_user.following.all()
+
+        serializer = serializers.ListUserSerializer(user_following, many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
