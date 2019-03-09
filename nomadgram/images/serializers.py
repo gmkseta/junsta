@@ -3,7 +3,13 @@ from . import models
 from nomadgram.users import models as user_models
 
 
-
+class SmallImagesSerializer(serializers.ModelSerializer):
+    """ Used for the notifications"""
+    class Meta:
+        model = models.Image
+        field = (
+            'file',
+        )
 
 class CountImageSerializer(serializers.ModelSerializer):
     

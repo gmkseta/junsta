@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
+from nomadgram.notifications import views as notification_views
 
 class ExploreUsers(APIView):
 
@@ -19,7 +20,6 @@ class FollowUser(APIView):
 
     def post(self, request, user_id, format=True):
         user = request.user
-
         try:
             user_to_follow = models.User.objects.get(id=user_id)
         except models.User.DoesNotExist:
@@ -28,6 +28,8 @@ class FollowUser(APIView):
         user.following.add(user_to_follow)
 
         user.save()
+
+        notification_views.create_notification(creator=user, to=user_to_follow, notification_type='follow')
 
         return Response(status=status.HTTP_201_CREATED)
 

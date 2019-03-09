@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . import models, serializers
+from nomadgram.notifications import views as notification_views
 
 class Feed(APIView):
 
@@ -57,6 +58,11 @@ class LikeImage(APIView):
                 creator=user,
                 image=found_image
             )
+
+            notification_views.create_notification(
+                user, found_image.creator, 'like', found_image
+            )
+
             return Response(status.HTTP_201_CREATED)
 
 class UnLikeImage(APIView):
@@ -97,6 +103,10 @@ class CommentOnImage(APIView):
         if serializer.is_valid():
 
             serializer.save(creator=user, image=found_image)
+
+            notification_views.create_notification(
+                user, found_image.creator, 'comment', found_image, serializer.data['message']
+            )
 
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
             
